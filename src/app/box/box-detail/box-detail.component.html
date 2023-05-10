@@ -1,0 +1,11 @@
+<div class="card text-bg-light" style="max-width: 18rem;">
+    <div class="card-header">{{ box.name }}</div>
+    <div class="card-body">
+        <h5 class="card-title">{{ box.doctor }} </h5>
+        <ng-container *ngIf="!box.isAvailable">
+            <h3 class="card-title">{{ box.patient }}</h3>
+            <p class="card-text">{{ box.comments }}</p>
+            <button class="btn btn-primary text-end" (click)="boxRelease()">Liberar box</button>
+        </ng-container>
+    </div>
+</div>

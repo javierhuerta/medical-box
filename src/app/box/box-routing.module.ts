@@ -1,15 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { BoxMainComponent } from './box-main/box-main.component';
 
 const routes: Routes = [
   {
     path: "",
-    loadChildren: () => import('./box/box.module').then(m => m.BoxModule),
+    component: BoxMainComponent
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class BoxRoutingModule { }

@@ -1,0 +1,26 @@
+<div class="card">
+    <div class="card-body">
+        <form [formGroup]="form">
+            <h5 class="card-title">Ingreso del paciente</h5>
+            <div class="mb-3">
+                <label class="form-label">Nombre del paciente</label>
+                <input type="text" formControlName="patient" class="form-control" placeholder="Kevin Arenas">
+            </div>
+            <div class="mb-3">
+                <select 
+                    class="form-select" 
+                    formControlName="boxId" aria-label="Selector de boxes" 
+                    placeholder="Seleccione los boxes disponibles">
+                    <option [value]="box.id" *ngFor="let box of boxesAvailable$ | async">
+                        {{ box.name }}
+                    </option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Comentarios para el médico</label>
+                <textarea class="form-control" formControlName="comments" rows="3"></textarea>
+            </div>
+            <button class="btn btn-primary text-end" (click)="save()">Ingresar</button>
+        </form>
+    </div>
+</div>

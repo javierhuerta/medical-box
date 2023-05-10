@@ -1,0 +1,10 @@
+<div class="main">
+    <!-- Formulario de ingreso de paciente-->
+    <div>
+        <h1>MEDICAL BOX</h1>
+        <app-box-patient-admission></app-box-patient-admission>
+    </div>
+    
+    <!-- Listado de boxes-->
+    <app-box-list (patientAdmissionUpdateAvailableBoxes)="patientAdmissionUpdateAvailableBoxes()"></app-box-list>
+</div>
