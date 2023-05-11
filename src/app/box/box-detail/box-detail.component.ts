@@ -9,12 +9,10 @@ import { BoxService } from '../box.service';
 })
 export class BoxDetailComponent {
   @Input() box: BoxDto = {} as BoxDto;
-  @Output() updateBoxList = new EventEmitter<BoxDto>();
 
   constructor(private _boxService: BoxService) {};
 
   boxRelease() {
     this._boxService.boxRelease(this.box);
-    this.updateBoxList.emit(this.box);
   } 
 }

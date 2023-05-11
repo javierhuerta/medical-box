@@ -1,6 +1,5 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, Signal } from '@angular/core';
 import { BoxService } from '../box.service';
-import { Observable } from 'rxjs';
 import { BoxDto } from '../box.models';
 
 @Component({
@@ -9,15 +8,9 @@ import { BoxDto } from '../box.models';
   styleUrls: ['./box-list.component.scss']
 })
 export class BoxListComponent {
-  boxes$: Observable<BoxDto[]> = this._boxService.getAllBoxes();
-  @Output() patientAdmissionUpdateAvailableBoxes = new EventEmitter<boolean>();
+  boxes: Signal<BoxDto[]> = this._boxService.boxes;
 
   constructor(private _boxService: BoxService) { 
-  }
-
-  getBoxes() {
-    this.boxes$ = this._boxService.getAllBoxes();
-    this.patientAdmissionUpdateAvailableBoxes.emit(true);
   }
 
 }

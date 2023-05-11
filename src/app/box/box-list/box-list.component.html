@@ -1,6 +1,6 @@
 <div class="list">
-    <ng-container *ngFor="let box of (boxes$ | async)">
-        <app-box-detail [box]="box" (updateBoxList)="getBoxes()"></app-box-detail>
+    <ng-container *ngFor="let box of boxes()">
+        <app-box-detail [box]="box"></app-box-detail>
     </ng-container>
 </div>
 

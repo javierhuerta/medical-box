@@ -11,7 +11,7 @@
                     class="form-select" 
                     formControlName="boxId" aria-label="Selector de boxes" 
                     placeholder="Seleccione los boxes disponibles">
-                    <option [value]="box.id" *ngFor="let box of boxesAvailable$ | async">
+                    <option [value]="box.id" *ngFor="let box of boxesAvailable()">
                         {{ box.name }}
                     </option>
                 </select>

@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { BoxDto, PatientAdmissionDto } from './box.models';
-import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BoxService {
 
+  boxes = signal<BoxDto[]>([]);
   data: BoxDto[] = [
     {
       id: 1,
@@ -34,42 +34,29 @@ export class BoxService {
     }
   ];
 
-  constructor() {}
-
-  getAllBoxes(): Observable<BoxDto[]> {
-    return of(this.data);
+  constructor() {
+    this.boxes.set(this.data);
   }
 
   createPatientAdmission(payload: PatientAdmissionDto) {
-    let results = this.data.filter(box => box.id == payload.boxId);
-    if (results.length < 1) {
-      console.log("No existen boxes con el id entregado");
-      return;
-    }
-
-    let box = results[0];
-
-    if (!box.isAvailable) {
-      console.log("El box no se encuentra disponible");
-      return;
-    }
-
-    box.patient = payload.patient;
-    box.comments = payload.comments;
-    box.isAvailable = false;
-
+    this.boxes.mutate((boxes) => {
+      let box = boxes.find(box => box.id == payload.boxId);
+      if (box !== undefined) {
+        box.patient = payload.patient;
+        box.comments = payload.comments;
+        box.isAvailable = false;
+      }
+    });
   }
 
   boxRelease(payload: BoxDto) {
-    let results = this.data.filter(box => box.id == payload.id);
-    if (results.length < 1) {
-      console.log("No existen boxes con el id entregado");
-      return;
-    }
-
-    let box = results[0];
-    box.isAvailable = true;
-    box.patient = undefined;
-    box.comments = undefined;
+    this.boxes.mutate((boxes) => {
+      let box = boxes.find(box => box.id == payload.id);
+      if (box !== undefined) {
+        box.isAvailable = true;
+        box.patient = undefined;
+        box.comments = undefined;
+      }
+    });
   }
 }

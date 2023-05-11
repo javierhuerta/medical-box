@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Component, Signal, computed } from '@angular/core';
 import { BoxDto } from '../box.models';
 import { BoxService } from '../box.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -10,14 +9,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./box-patient-admission.component.scss']
 })
 export class BoxPatientAdmissionComponent {
-  boxesAvailable$: Observable<BoxDto[]> = this._boxService.getAllBoxes().pipe(map(boxes => boxes.filter(x => x.isAvailable)));
+  boxesAvailable: Signal<BoxDto[]> = computed(() => this._boxService.boxes().filter(box => box.isAvailable));
   form: FormGroup = this.buildForm();
 
   constructor(private _boxService: BoxService, private _fb: FormBuilder) {}
-
-  updateBoxesAvailables() {
-    this.boxesAvailable$ = this._boxService.getAllBoxes().pipe(map(boxes => boxes.filter(x => x.isAvailable)));
-  }
 
   buildForm() {
     return this._fb.group({
@@ -33,7 +28,6 @@ export class BoxPatientAdmissionComponent {
     }
 
     this._boxService.createPatientAdmission(this.form.value);
-    this.updateBoxesAvailables();
     this.form.reset();
   }
 }
