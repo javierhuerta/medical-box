@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, effect, signal } from '@angular/core';
 import { BoxDto, PatientAdmissionDto } from './box.models';
 
 @Injectable({
@@ -36,6 +36,10 @@ export class BoxService {
 
   constructor() {
     this.boxes.set(this.data);
+
+    effect(() => {
+      console.log(`Los boxes actuales: ${this.boxes()}`);
+    });
   }
 
   createPatientAdmission(payload: PatientAdmissionDto) {
